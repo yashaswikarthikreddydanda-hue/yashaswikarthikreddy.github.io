@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yashaswi Karthik Reddy Danda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080b10;
+      --bg2: #0e1319;
+      --bg3: #151b24;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --text: #e8edf5;
+      --muted: #6b7888;
+      --accent: #4ade80;
+      --accent2: #a3e635;
+      --accent-dim: rgba(74,222,128,0.12);
+      --accent2-dim: rgba(163,230,53,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(8,11,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--accent); text-transform: uppercase;
+      font-family: 'DM Mono', monospace;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; right: 5%; width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(74,222,128,0.07) 0%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute; bottom: 10%; left: 10%; width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(163,230,53,0.05) 0%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'DM Mono', monospace; font-size: 0.78rem;
+      color: var(--accent); border: 1px solid rgba(74,222,128,0.25);
+      padding: 0.35rem 0.9rem; border-radius: 2px; margin-bottom: 2rem;
+      letter-spacing: 0.08em;
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name .first { color: var(--text); display: block; }
+    .hero-name .last { color: var(--accent); display: block; }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 520px;
+      margin-bottom: 2.5rem; line-height: 1.75;
+      font-weight: 400;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block; padding: 0.8rem 2rem;
+      background: var(--accent); color: #080b10;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-block; padding: 0.8rem 2rem;
+      background: transparent; color: var(--text);
+      font-family: 'Syne', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; border: 1px solid var(--border2); border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace; font-size: 0.75rem;
+      color: var(--accent2); letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 1rem;
+    }
+    .section-divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin-bottom: 3rem;
+    }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.85; margin-bottom: 1.25rem;
+      font-size: 1rem; font-weight: 400;
+    }
+    .about-text p span { color: var(--text); font-weight: 600; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    }
+    .stat-box {
+      padding: 1.75rem; background: var(--bg3);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-box:nth-child(even) { border-right: none; }
+    .stat-box:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 800; color: var(--accent);
+      letter-spacing: -0.03em; line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
+    .cat-tile {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.75rem 1.5rem;
+      cursor: pointer; transition: border-color 0.2s, transform 0.18s, background 0.2s;
+      position: relative; overflow: hidden; user-select: none;
+    }
+    .cat-tile::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .cat-tile:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .cat-tile:hover::before { opacity: 1; }
+    .cat-tile.active { border-color: rgba(74,222,128,0.45); background: rgba(74,222,128,0.05); }
+    .cat-tile.active::before { opacity: 1; }
+    .cat-icon { font-size: 1.8rem; margin-bottom: 0.85rem; line-height: 1; }
+    .cat-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .cat-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .project-panel { display: none; animation: slideDown 0.3s ease; }
+    .project-panel.open { display: block; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .panel-title { font-size: 1rem; font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; text-transform: uppercase; }
+    .panel-close {
+      background: none; border: 1px solid var(--border2); color: var(--muted);
+      font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 2px;
+      cursor: pointer; font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .panel-close:hover { color: var(--text); border-color: var(--border2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .project-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.75rem;
+      cursor: pointer; transition: border-color 0.25s, transform 0.2s;
+      position: relative; overflow: hidden;
+      text-decoration: none; display: block; color: inherit;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .project-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-num { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .project-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.75; margin-bottom: 1.25rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 0.22rem 0.6rem; border-radius: 2px; background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(74,222,128,0.15); }
+    .project-link-hint { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .project-card:hover .project-link-hint { color: var(--accent); }
+    .project-link-hint svg { width: 12px; height: 12px; fill: currentColor; }
+
+    /* SKILLS */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .skill-group {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.75rem;
+    }
+    .skill-group-title {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--accent2); font-family: 'DM Mono', monospace;
+      margin-bottom: 1.25rem;
+    }
+    .skill-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .skill-item { display: flex; align-items: center; justify-content: space-between; }
+    .skill-name { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+    .skill-bar-wrap {
+      width: 100px; height: 3px; background: var(--border);
+      border-radius: 2px; overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    /* CONTACT */
+    #contact { background: var(--bg); text-align: center; }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-text { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; line-height: 1.85; }
+    .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      font-family: 'DM Mono', monospace;
+      padding: 0.7rem 1.4rem; border: 1px solid var(--border);
+      border-radius: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); border-color: rgba(74,222,128,0.35); }
+    .contact-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text { font-size: 0.8rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .footer-accent { color: var(--accent); }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section, #hero { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">YKR</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Available for opportunities</div>
+      <h1 class="hero-name">
+        <span class="first">Yashaswi Karthik Reddy</span>
+        <span class="last">Danda</span>
+      </h1>
+      <p class="hero-sub">Software engineer crafting clean, performant, and thoughtful digital experiences. Passionate about building systems that scale and code that lasts.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="fade-in">
+      <div class="section-label">01 — About</div>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>I'm <span>Yashaswi Karthik Reddy Danda</span>, a software engineer who loves turning complex problems into elegant solutions. My work spans from backend systems to interactive front-ends.</p>
+        <p>I believe great software is built at the intersection of <span>technical rigor</span> and <span>thoughtful design</span>. Whether architecting APIs or optimizing queries, I bring the same attention to detail to every layer of the stack.</p>
+        <p>When I'm not coding, I'm exploring new technologies, contributing to open-source, or diving into a good technical read.</p>
+      </div>
+      <div class="about-stats fade-in">
+        <div class="stat-box">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Lines of Code</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="fade-in">
+      <div class="section-label">02 — Projects</div>
+      <h2 class="section-title">What I've Built</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- Category Tiles -->
+    <div class="category-grid fade-in">
+      <div class="cat-tile" onclick="openCategory('video-compression')">
+        <div class="cat-icon">🗜️</div>
+        <div class="cat-name">Video Compression</div>
+        <div class="cat-count">1 project</div>
+      </div>
+      <div class="cat-tile" onclick="openCategory('video-processing')">
+        <div class="cat-icon">🎬</div>
+        <div class="cat-name">Video Processing</div>
+        <div class="cat-count">1 project</div>
+      </div>
+      <div class="cat-tile" onclick="openCategory('image-processing')">
+        <div class="cat-icon">🖼️</div>
+        <div class="cat-name">Image Processing</div>
+        <div class="cat-count">2 projects</div>
+      </div>
+      <div class="cat-tile" onclick="openCategory('machine-learning')">
+        <div class="cat-icon">🧠</div>
+        <div class="cat-name">Machine Learning</div>
+        <div class="cat-count">1 project</div>
+      </div>
+      <div class="cat-tile" onclick="openCategory('audio-processing')">
+        <div class="cat-icon">🎵</div>
+        <div class="cat-name">Audio Signal Processing</div>
+        <div class="cat-count">1 project</div>
+      </div>
+    </div>
+
+    <!-- Video Compression Panel -->
+    <div class="project-panel" id="panel-video-compression">
+      <div class="panel-header">
+        <div class="panel-title">🗜️ Video Compression</div>
+        <button class="panel-close" onclick="closeCategory('video-compression')">✕ Close</button>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/yourusername/video-compression-project" target="_blank">
+          <div class="project-num">VC_01</div>
+          <h3 class="project-title">Video Compression Project</h3>
+          <p class="project-desc">A placeholder description for your video compression project. Update this with your actual project details, key techniques used, and results achieved.</p>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">FFmpeg</span><span class="tag">Codec</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Video Processing Panel -->
+    <div class="project-panel" id="panel-video-processing">
+      <div class="panel-header">
+        <div class="panel-title">🎬 Video Processing</div>
+        <button class="panel-close" onclick="closeCategory('video-processing')">✕ Close</button>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/yourusername/video-processing-project" target="_blank">
+          <div class="project-num">VP_01</div>
+          <h3 class="project-title">Video Processing Project</h3>
+          <p class="project-desc">A placeholder description for your video processing project. Update this with your actual project details, algorithms used, and outcomes.</p>
+          <div class="project-tags"><span class="tag">OpenCV</span><span class="tag">Python</span><span class="tag">CUDA</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Image Processing Panel -->
+    <div class="project-panel" id="panel-image-processing">
+      <div class="panel-header">
+        <div class="panel-title">🖼️ Image Processing</div>
+        <button class="panel-close" onclick="closeCategory('image-processing')">✕ Close</button>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/yourusername/image-project-1" target="_blank">
+          <div class="project-num">IP_01</div>
+          <h3 class="project-title">Image Processing Project 1</h3>
+          <p class="project-desc">A placeholder description for your first image processing project. Update with real details, techniques, and what problem it solves.</p>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">PIL</span><span class="tag">NumPy</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+        <a class="project-card" href="https://github.com/yourusername/image-project-2" target="_blank">
+          <div class="project-num">IP_02</div>
+          <h3 class="project-title">Image Processing Project 2</h3>
+          <p class="project-desc">A placeholder description for your second image processing project. Describe what makes it unique and what it accomplishes.</p>
+          <div class="project-tags"><span class="tag">OpenCV</span><span class="tag">C++</span><span class="tag">MATLAB</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Machine Learning Panel -->
+    <div class="project-panel" id="panel-machine-learning">
+      <div class="panel-header">
+        <div class="panel-title">🧠 Machine Learning</div>
+        <button class="panel-close" onclick="closeCategory('machine-learning')">✕ Close</button>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/yourusername/ml-project" target="_blank">
+          <div class="project-num">ML_01</div>
+          <h3 class="project-title">Machine Learning Project</h3>
+          <p class="project-desc">A placeholder description for your ML project. Update with model architecture, dataset, training approach, and accuracy/benchmark results.</p>
+          <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">Python</span><span class="tag">scikit-learn</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Audio Signal Processing Panel -->
+    <div class="project-panel" id="panel-audio-processing">
+      <div class="panel-header">
+        <div class="panel-title">🎵 Audio Signal Processing</div>
+        <button class="panel-close" onclick="closeCategory('audio-processing')">✕ Close</button>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card" href="https://github.com/yourusername/audio-project" target="_blank">
+          <div class="project-num">AU_01</div>
+          <h3 class="project-title">Audio Signal Processing Project</h3>
+          <p class="project-desc">A placeholder description for your audio project. Update with DSP techniques, audio features extracted, and what the system achieves.</p>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">librosa</span><span class="tag">DSP</span></div>
+          <div class="project-link-hint"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub →</div>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="fade-in">
+      <div class="section-label">03 — Skills</div>
+      <h2 class="section-title">What I Work With</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">C++</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Python</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">MATLAB</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">CUDA</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Frameworks & Tools</div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <span class="skill-name">GStreamer</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">FFmpeg</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">SIMD</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Linux</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="fade-in">
+        <div class="section-label">04 — Contact</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="section-divider" style="margin: 0 auto 2rem;"></div>
+      </div>
+      <p class="contact-text fade-in">Have a project in mind, a role to discuss, or just want to say hello? I'm always open to thoughtful conversations and new opportunities.</p>
+      <div class="contact-links fade-in">
+        <a href="mailto:yashaswi@example.com" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email Me
+        </a>
+        <a href="https://github.com/yashaswi" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/yashaswi" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-text">© 2026 <span class="footer-accent">Yashaswi Karthik Reddy Danda</span></div>
+    <div class="footer-text">Built with <span class="footer-accent">♥</span> & hosted on GitHub Pages</div>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Category tile interaction
+    function openCategory(id) {
+      // Close all panels and deactivate all tiles
+      document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('open'));
+      document.querySelectorAll('.cat-tile').forEach(t => t.classList.remove('active'));
+
+      // Open clicked panel
+      const panel = document.getElementById('panel-' + id);
+      if (panel) {
+        panel.classList.add('open');
+        // Activate the clicked tile
+        event.currentTarget.classList.add('active');
+        // Smooth scroll to panel
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+      }
+    }
+
+    function closeCategory(id) {
+      document.getElementById('panel-' + id).classList.remove('open');
+      document.querySelectorAll('.cat-tile').forEach(t => t.classList.remove('active'));
+    }
+  </script>
+</body>
+</html>
